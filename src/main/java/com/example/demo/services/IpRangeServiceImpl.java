@@ -16,6 +16,12 @@ import java.util.Optional;
 @Service
 public class  IpRangeServiceImpl {
 
+    public IpRangeServiceImpl(IpRangeRepository ipRangeRepository, IpConverter ipConverter, HibernateIpRangeRepo hibernateIpRangeRepo) {
+        this.ipRangeRepository = ipRangeRepository;
+        this.ipConverter = ipConverter;
+        this.hibernateIpRangeRepo = hibernateIpRangeRepo;
+    }
+
     @Autowired
     IpRangeRepository ipRangeRepository;
 

@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Service
 public class UserServiceImpl {
 
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Autowired
     UserRepository userRepository;
 
