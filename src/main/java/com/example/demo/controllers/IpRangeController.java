@@ -12,11 +12,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("ipRange")
 public class IpRangeController {
 
+    public IpRangeController(IpRangeServiceImpl ipRangeService) {
+        this.ipRangeService = ipRangeService;
+    }
+
     @Autowired
     IpRangeServiceImpl ipRangeService;
 
+
+
     @GetMapping("/{ipAddress}")
-    public IpRangeModel findRange(@PathVariable String ipAddress){
+    public Object findRange(@PathVariable String ipAddress){
         return ipRangeService.findRange(ipAddress);
     }
 

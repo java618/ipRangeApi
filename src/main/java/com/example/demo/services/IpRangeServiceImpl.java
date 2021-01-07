@@ -31,35 +31,46 @@ public class  IpRangeServiceImpl {
     @Autowired
     HibernateIpRangeRepo hibernateIpRangeRepo;
 
-    public IpRangeModel findRange(String ipRange){
-        long ipLongValue = ipConverter.ipToLong(ipRange);
-        Optional<IpRangeEntity> inDb = hibernateIpRangeRepo.findByRange(ipLongValue);
-        IpRangeModel ipRangeModel = new IpRangeModel();
-        ipRangeModel.setLowerIp(ipConverter.longToIp(inDb.get().getLowerRange()));
-        ipRangeModel.setUpperIp(ipConverter.longToIp(inDb.get().getUpperRange()));
-        Optional<IpRangeModel> ipmOp = Optional.of(ipRangeModel);
+    public Object findRange(String ipRange){
+
+        if (ipConverter.validate(ipRange)){
+
+            long ipLongValue = ipConverter.ipToLong(ipRange);
+            Optional<IpRangeEntity> inDb = hibernateIpRangeRepo.findByRange(ipLongValue);
+            IpRangeModel ipRangeModel = new IpRangeModel();
+            ipRangeModel.setLowerIp(ipConverter.longToIp(inDb.get().getLowerRange()));
+            ipRangeModel.setUpperIp(ipConverter.longToIp(inDb.get().getUpperRange()));
+            Optional<IpRangeModel> ipmOp = Optional.of(ipRangeModel);
 //        return inDb.orElseThrow(RuntimeException::new);
-        return ipmOp.orElseThrow(RuntimeException::new);
+            return ipmOp.orElseThrow(RuntimeException::new);
+        }else{
+            return "Ip address is not correct";
+        }
     }
 
     public ResponseEntity<String> addIpRange(IpRangeModel ipRangeModel){
 
         String info;
 
-        long lowerRangeLongValue = ipConverter.ipToLong(ipRangeModel.getLowerIp());
-        long upperRangeLongValue = ipConverter.ipToLong(ipRangeModel.getUpperIp());
+        if (ipConverter.validate(ipRangeModel.getLowerIp()) && ipConverter.validate(ipRangeModel.getUpperIp())) {
 
-        if(hibernateIpRangeRepo.findByRange(lowerRangeLongValue).isEmpty() ||
-                hibernateIpRangeRepo.findByRange(upperRangeLongValue).isEmpty()){
+            long lowerRangeLongValue = ipConverter.ipToLong(ipRangeModel.getLowerIp());
+            long upperRangeLongValue = ipConverter.ipToLong(ipRangeModel.getUpperIp());
 
-            IpRangeEntity ipRangeEntity = new IpRangeEntity();
-            ipRangeEntity.setLowerRange(lowerRangeLongValue);
-            ipRangeEntity.setUpperRange(upperRangeLongValue);
-            ipRangeRepository.save(ipRangeEntity);
+            if (hibernateIpRangeRepo.findByRange(lowerRangeLongValue).isEmpty() ||
+                    hibernateIpRangeRepo.findByRange(upperRangeLongValue).isEmpty()) {
 
-            info = "Ip Range successfully created";
+                IpRangeEntity ipRangeEntity = new IpRangeEntity();
+                ipRangeEntity.setLowerRange(lowerRangeLongValue);
+                ipRangeEntity.setUpperRange(upperRangeLongValue);
+                ipRangeRepository.save(ipRangeEntity);
+
+                info = "Ip Range successfully created";
+            } else {
+                info = "Ip Range is not correct";
+            }
         }else {
-            info = "Ip Range is not correct";
+            info = "Ip addresses is not correct";
         }
 
         return new ResponseEntity<>(info, HttpStatus.OK);

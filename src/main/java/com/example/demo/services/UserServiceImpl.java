@@ -53,6 +53,6 @@ public class UserServiceImpl {
 
         }
 
-        return new ResponseEntity<>(returnInfo,HttpStatus.OK);
+        return new ResponseEntity<>(returnInfo, HttpStatus.OK);
     }
 }
