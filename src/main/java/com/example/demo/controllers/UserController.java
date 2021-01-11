@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin("*")
 public class UserController {
+
+
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }

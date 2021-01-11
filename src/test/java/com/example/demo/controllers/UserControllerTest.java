@@ -3,7 +3,9 @@ package com.example.demo.controllers;
 import com.example.demo.models.UserRequestModel;
 import com.example.demo.services.UserServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -42,14 +44,17 @@ class UserControllerTest {
         UserRequestModel userRequestModel = new UserRequestModel();
         userRequestModel.setName("alex");
         userRequestModel.setPassword("1");
+//        ObjectNode jsonNodes = objectMapper.createObjectNode();
+//        jsonNodes.putPOJO("REQUESTMODEL",userRequestModel);
 
-        when(userService.createUser(userRequestModel)).thenReturn(new ResponseEntity<>("true", HttpStatus.OK));
+
+        when(userService.checkUser(userRequestModel)).thenReturn(new ResponseEntity<>(true, HttpStatus.OK));
         mockMvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userRequestModel)))
                 .andExpect(status().isOk())
 //                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString("true")));
+                .andExpect(result -> new ResponseEntity<>(true, HttpStatus.OK));
 
     }
 
@@ -63,9 +68,8 @@ class UserControllerTest {
         mockMvc.perform(post("/registration")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userRequestModel)))
-                .andExpect(status().isOk());
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(content().string("User successfully created"));
-
+                .andExpect(status().isOk())
+                //.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> new ResponseEntity<>("User successfully created", HttpStatus.OK));
     }
 }

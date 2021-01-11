@@ -51,13 +51,25 @@ class IpRangeControllerTest {
         when(ipRangeService.findRange(ipAddr)).thenReturn(ipRangeModel);
         mockMvc.perform(get("/ipRange"+"/"+ipAddr)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
 
 //                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(content().json(objectMapper.writeValueAsString(ipRangeModel)));
+                .andExpect(result -> java.util.Optional.of(ipRangeModel));
     }
 
     @Test
-    void addRange() {
+    void addRange() throws Exception {
+        String ipAddr = "192.168.0.1";
+        IpRangeModel ipRangeModel = new IpRangeModel();
+        ipRangeModel.setLowerIp("192.168.0.0");
+        ipRangeModel.setUpperIp("192.168.2.255");
+
+        when(ipRangeService.findRange(ipAddr)).thenReturn(new ResponseEntity<>("Ip Range successfully created", HttpStatus.OK));
+        mockMvc.perform(get("/ipRange"+"/"+ipAddr)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> new ResponseEntity<>("Ip Range successfully created", HttpStatus.OK));
     }
 }
