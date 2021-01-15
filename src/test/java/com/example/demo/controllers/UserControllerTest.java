@@ -39,7 +39,7 @@ class UserControllerTest {
     }
 
     @Test
-    void checkUser() throws Exception {
+    void tryCheckUserControllersMethod_andReturnTrue() throws Exception {
 
         UserRequestModel userRequestModel = new UserRequestModel();
         userRequestModel.setName("alex");
@@ -59,7 +59,7 @@ class UserControllerTest {
     }
 
     @Test
-    void creatUser() throws Exception {
+    void tryCreatUserControllersMethod_andExpectSuccess() throws Exception {
         UserRequestModel userRequestModel = new UserRequestModel();
         userRequestModel.setName("alex");
         userRequestModel.setPassword("1");

@@ -27,7 +27,7 @@ class UserServiceImplTest {
 
 
     @Test
-    void checkUser() {
+    void tryCheckUserMethod_andReturnTrue() {
         UserEntity user = new UserEntity();
         user.setUserName("alex");
         user.setPassword("1");
@@ -44,7 +44,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void createUser() {
+    void tryCreateUserMethod_andReturnSuccess() {
 
         UserEntity user = new UserEntity();
         user.setUserName("alex");

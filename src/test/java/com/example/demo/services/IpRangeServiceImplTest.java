@@ -36,7 +36,7 @@ class IpRangeServiceImplTest {
     }
 
     @Test
-    void findRange() {
+    void tryFindRangeMethod_whenDataIsCorrect() {
 
         String ipAddr = "192.168.0.158";
         IpRangeModel ipRangeModel = new IpRangeModel();
@@ -59,7 +59,7 @@ class IpRangeServiceImplTest {
 
     }
     @Test
-    void findIncorrectRange() {
+    void tryFindRangeMethod_whenIpAddressIsNotCorrect() {
 
         String ipAddr = "192.168.0.258";
         IpRangeModel ipRangeModel = new IpRangeModel();
@@ -82,7 +82,7 @@ class IpRangeServiceImplTest {
     }
 
     @Test
-    void addIpRange() {
+    void tryAddIpRangeMethod_whenDataIsCorrect() {
         IpRangeModel ipRangeModel = new IpRangeModel();
         ipRangeModel.setLowerIp("192.168.0.0");
         ipRangeModel.setUpperIp("192.168.2.255");
@@ -99,7 +99,7 @@ class IpRangeServiceImplTest {
     }
 
     @Test
-    void addIncorrectIpRange() {
+    void tryAddIpRangeMethod_whenDataIsIncorrect() {
         IpRangeModel ipRangeModel = new IpRangeModel();
         ipRangeModel.setLowerIp("192.168.0.0");
         ipRangeModel.setUpperIp("192.168.2.258");
@@ -116,7 +116,7 @@ class IpRangeServiceImplTest {
     }
 
     @Test
-    void addExistedIpRange() {
+    void tryAddIpRangeMethod_whenRangeIsExist() {
         IpRangeModel ipRangeModel = new IpRangeModel();
         ipRangeModel.setLowerIp("192.168.0.0");
         ipRangeModel.setUpperIp("192.168.2.255");

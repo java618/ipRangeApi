@@ -42,7 +42,7 @@ class IpRangeControllerTest {
     }
 
     @Test
-    void findRange() throws Exception {
+    void tryFindRangeControllersMethod_andExpectCorrectAnswer() throws Exception {
         String ipAddr = "192.168.0.1";
         IpRangeModel ipRangeModel = new IpRangeModel();
         ipRangeModel.setLowerIp("192.168.0.0");
@@ -58,7 +58,7 @@ class IpRangeControllerTest {
     }
 
     @Test
-    void addRange() throws Exception {
+    void tryAddRangeControllersMethod_andExpectSuccess() throws Exception {
         String ipAddr = "192.168.0.1";
         IpRangeModel ipRangeModel = new IpRangeModel();
         ipRangeModel.setLowerIp("192.168.0.0");
